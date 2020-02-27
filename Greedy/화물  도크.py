@@ -16,3 +16,5 @@ for i in range(int(input())):
         if not truck_weights:
             break
     print(f'#{i+1} {sum}')
+
+    
