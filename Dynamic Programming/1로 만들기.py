@@ -30,15 +30,15 @@
 #     return memo[N]
 
 def make_one(input_N):
-
+    # 인덱스 값을 하나씩 증가시키면서 탐색한다
     for i in range(1, input_N+1):
-        memo[i] = memo[i-1] + 1
+        memo[i] = memo[i-1] + 1 # 그전의 인덱스에서 +1 카운트한다 (N-1의 경우)
 
-        if i % 2 == 0:
+        if i % 2 == 0: # 그 전에 2로 나누어진 인덱스 DP값에서 +1 카운트 (N//2의 경우)
             memo[i] = min(memo[i], memo[i//2]+1)
-        if i % 3 == 0:
+        if i % 3 == 0: # 그 전에 3으로 나누어진 인덱스 DP값에서 +1 카운트 (N//3의 경우)
             memo[i] = min(memo[i], memo[i//3]+1)
-
+        # 결과적으로 i를 계산했을 때의 최소값이 memo[i]에 저장됨.
     return memo[input_N]
 
 N = int(input())
