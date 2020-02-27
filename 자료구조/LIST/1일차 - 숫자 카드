@@ -22,6 +22,7 @@ def max_card_count(card_list, N):
     return max_card, max_count
 
 
+
 for test_case in range(1, T + 1):
     N = int(input())
     card_list = int(input())
