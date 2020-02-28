@@ -1,4 +1,4 @@
-import itertools
+
 
 def make_list(max_cnt):
     global N
@@ -53,3 +53,22 @@ for t in range(1, T+1):
     print(f"#{t} {find_min_cost()}")
 
     
+
+    
+""" 재귀적 방법 but, python에서는 시간초과 """
+
+# def find_min_cost(here, visited):
+#     global N, E, D
+#     if visited == (1<<N)-1: return E[here][0]
+# 
+#     ret = D[here][visited]
+#     if ret >= 0: return ret
+#     ret = float('inf')
+# 
+#     for next in range(N):
+#         if visited & (1<<next): continue
+#         cand = E[here][next] + find_min_cost(next, visited + (1<<next))
+#         ret = min(ret, cand)
+# 
+#     return ret
+
