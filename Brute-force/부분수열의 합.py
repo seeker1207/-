@@ -1,6 +1,8 @@
 import sys
 input = sys.stdin.readline
-
+a = []
+enu
+a.sort(key= lambda x: x[0])
 
 N, S = map(int, input().split())
 num_set = list(map(int, input().split()))
