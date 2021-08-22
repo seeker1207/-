@@ -1,0 +1,21 @@
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var countNegatives = function(grid) {
+    const m = grid.length,
+          n = grid[0].length;
+    let result = 0;
+    
+    for (let row of grid) {
+        for (let i=0; i<n; i++) {
+            if (row[i] < 0) {
+                result += (n - i)
+                // console.log(m-i+1)
+                break;
+            }
+        }
+    }
+    
+    return result
+};
