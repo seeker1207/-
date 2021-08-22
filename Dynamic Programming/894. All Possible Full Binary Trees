@@ -1,0 +1,58 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number} n
+ * @return {TreeNode[]}
+ */
+
+/*
+    왼쪽 노드에서 만들수 있는 모든 트리의 리스트를 FBT(x) 라고 한다면
+    오른쪽 노드에서 만들 수 있는 모든 트리의 리스트는 FBT(N-1-x) 이다.
+    따라서 FBT(N)는 left -> one of FBT(x) , right -> one of FBT(N-1-x) 로 둔 모든 경우의 수이다.
+*/
+
+var allPossibleFBT = function(n) {
+    var memo = new Array(n+1).fill(null).map(elm => [])
+    
+    
+    if (n % 2 === 0) {
+        return []
+    }
+    
+    let getAllFBT = (N) => {
+        
+        // memoization 한 값이 있으면 리턴
+        if (memo[N].length > 0)
+            return memo[N];
+        
+        if (N == 1)
+            return [new TreeNode(0)];
+        
+        var trees = [];
+
+        // root 노드를 제외하면서 루프를 돌아야하므로 N-1
+        for (let i = 1; i < N-1; i+=2){
+            let leftList = getAllFBT(i);
+            let rightList = getAllFBT(N - 1 - i);
+            
+            leftList.forEach((lt) => {
+                rightList.forEach((rt) => {
+                    trees.push(new TreeNode(0, lt, rt));
+                })
+            })
+        }
+        // console.log(memo)
+        memo[N] = trees;
+
+        return memo[N];
+    }
+    
+    return getAllFBT(n);
+    
+};
