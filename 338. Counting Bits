@@ -1,0 +1,22 @@
+/**
+ * @param {number} n
+ * @return {number[]}
+ */
+
+/* 이진수에서 끝에 0을 붙이면 2배를 하는 것과 같다.
+    따라서 현재 수가 짝수인 경우 2로 나눈 수의 1의 갯수와 현재 수의 1의 갯수는 같다고 할수 있다.
+    1보다 큰 그 다음 수 홀수인 경우 1의 갯수를 1 증가하기만 하면 된다.
+    
+    countBits(N) = countBits(2N)
+    countBits(N)+1 = countBits(2N+1)
+ */
+var countBits = function(n) {
+    
+    let counter = new Array(n+1).fill(0);
+    
+    for (let i = 0; i <= n; i+=1) {
+        counter[i] = counter[parseInt(i/2)] + i % 2;
+    }
+    
+    return counter;
+};
