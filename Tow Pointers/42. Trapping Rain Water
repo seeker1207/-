@@ -1,0 +1,40 @@
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+/*
+    왼쪽에서 오른쪽으로 진행방향일때 ->
+    
+    왼쪽 블럭 최대 높이가 오른쪽 블럭 최대높이보다 작으면,
+    현재 위치에 물이 찰수 있는 높이는 무조건 (왼쪽최대블럭 높이 - 현재 블럭높이)가 된다.
+    왜냐하면 현재 위치기준으로 오른쪽 블럭들이 어떤 값이 나오더라도 
+    (현재 위치기준으로 왼쪽 블럭 최대높이 보다 
+    오른쪽 블럭의 최대높이가 무조건 크다는것을 보장하기때문에)
+    왼쪽 최대 높이 만큼만 물이 찰수 밖에 없기 때문. 
+    (여기에 현재 블럭높이만큼 빼주면 그칸에서 찰수 있는 물의 높이가 된다.)
+    
+    오른쪽에서 왼쪽으로 진행방향일때 <- 
+    오른쪽 블럭 최대 높이가 왼쪽 블럭 최대높이보다 작은경우에도
+    오른쪽 최대높이를 기준으로 물이 찰수 밖에 없다.
+*/
+var trap = function(height) {
+    let [left, right] = [0, height.length - 1];
+    let [lMax, rMax] = [0, 0];
+    let result = 0;
+    
+    while(left < right) {
+        if (height[left] < height[right]) {
+            lMax = Math.max(lMax, height[left]);
+            result += lMax - height[left];
+            left++;
+        } else {
+            rMax = Math.max(rMax, height[right]);
+            result += rMax - height[right];
+            right--;
+        }
+        
+    }
+    
+
+    return result;
+};
