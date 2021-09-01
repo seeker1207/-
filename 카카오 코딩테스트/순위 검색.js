@@ -27,23 +27,22 @@ function solution(info, query) {
             })
         })
     })
-    console.log(hash[2][1][1][0])
+    // console.log(hash[2][1][1][0])
+    
     const getCntIsHigher = (num, list) => {
         
         if (list.length == 0) return 0;
         
-        let [left, right] = [0, list.length - 1];
+        let [left, right] = [0, list.length];
         
-        while (left > right) {
-            
+        while (left < right) {          
             let middle = Math.floor((left + right) / 2);
-            
-            if (num > list[middle]) left = middle + 1;
+            if (num > parseInt(list[middle])) left = middle + 1;
             else right = middle;
             
         }
         
-        return list.length - right;
+        return list.length - left;
     }
     
     query.forEach((q) => {
@@ -63,7 +62,6 @@ function solution(info, query) {
                 age.forEach((a) => {
                     sl.forEach((s) => {
                         cnt += getCntIsHigher(score, hash[l][b][a][s]);
-                        console.log(q, hash[l][b][a][s])
                     })
                 
                 })
@@ -72,14 +70,6 @@ function solution(info, query) {
         
         result.push(cnt)
     })
-    
-//     info.reduece((hash, elm) => {
-//         const [lan, bf, age, soul] = elm;
-        
-//         hash[lan[bf[age[soul]]]
-             
-//     }, {});
-    
     
     
     return result;
