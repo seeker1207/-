@@ -1,6 +1,5 @@
 function Node(name) {
     this.name = name;
-    this.exist = 'O';
     this.next = null;
     this.prev = null;
 }
@@ -36,7 +35,7 @@ function LinkedList() {
         let cnt = 0;
         while (cnt < moveCnt) {
             this.nowNode = this.nowNode.prev;
-            if (this.nowNode.exist == 'O') cnt++;
+            cnt++;
         }
     }
     
@@ -44,24 +43,36 @@ function LinkedList() {
         let cnt = 0;
         while (cnt < moveCnt) {
             this.nowNode = this.nowNode.next;
-            if (this.nowNode.exist == 'O') cnt++;
+            cnt++;
         }
     }
     
     this.delete = () => {
-        this.nowNode.exist = 'X';
-        this.cache.push(this.nowNode);
+        const temp = this.nowNode;
+        this.cache.push([temp, this.nowNode.prev, this.nowNode.next]);
         
-        if (this.nowNode !== this.tail) {
+        if (this.nowNode === this.head) {
+            this.head = this.nowNode.next;
+            this.nowNode.next.prev = null;
             this.nowNode = this.nowNode.next;
+        } else if (this.nowNode === this.tail) {
+            this.tail = this.nowNode.prev;
+            this.nowNode.prev.next = null;
+            this.nowNode = this.nowNode.prev;
         } else {
-            this.nowNode = this.tail.prev;
+            this.nowNode.prev.next = this.nowNode.next;
+            this.nowNode.next.prev = this.nowNode.prev;
+            this.nowNode = this.nowNode.next;
         }
     }
     
     this.recover = () => {
-        this.cache[this.cache.length-1].exist = 'O';
-        this.cache.pop();
+        let [target, prev, next] = this.cache.pop();
+        
+        if (prev) prev.next = target;
+        if (next) next.prev = target;
+        if (next === this.head) this.head = target;
+        if (prev === this.tail) this.tail = target;
     }
 }
 
@@ -92,13 +103,24 @@ function solution(n, k, cmd) {
                 linkedList.recover();
                 break;
         }
+
     }
     
     let node = linkedList.head;
 
-    while (node) {
-        answer += node.exist;
-        node = node.next;
+    for (let i=0; i<n; i++) {
+        if (node === null) {
+                answer += 'X';
+                continue;
+        }
+        if (i === +node.name) {
+            answer += 'O';
+            // console.log(node);
+            node = node.next;
+        } else {
+            answer += 'X';
+        }
     }
+
     return answer;
 }
